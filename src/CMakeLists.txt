@@ -1,1 +1,1 @@
-add_executable(PGsolver main.cpp)
+add_executable(PGsolver main.cpp Parser.cpp Elements.cpp PGSolver.cpp Stamping.cpp)
