@@ -17,11 +17,38 @@ namespace PowerGrid {
         }
     }
 
+    void PG_Solver::SolvePowerPlane() {
+        std::cout << "Solving Power plane ..." << std::endl;
+        double *x = linearSolver.solve(MNA, source_vec);
+        for (const auto &node:power_stamp_NodeList) {
+            node.first->node_voltage = x[node.second];
+            MergeNodeMap(node.first, x[node.second]);
+        }
+        delete[]x;
+    }
+
+    void PG_Solver::SolveGNDPlane() {
+        std::cout << "Solving GND plane ..." << std::endl;
+        double *x = linearSolver.solve(MNA_gnd, source_vec_gnd);
+        for (const auto &node:gnd_stamp_NodeList) {
+            node.first->node_voltage = x[node.second];
+            MergeNodeMap(node.first, x[node.second]);
+        }
+        delete[]x;
+    }
+
     void PG_Solver::Output_DC_Solution(const std::string &file_name) {
 
         std::fstream fout(file_name.c_str(), std::ios::out);
 
         for (auto &node : PowerPlaneNodes) {
+            if (node.first != "0")
+                fout << node.first << " " << node.second->node_voltage << std::endl;
+            else
+                fout << "G" << " " << node.second->node_voltage << std::endl;
+        }
+
+        for (auto &node : GNDPlaneNodes) {
             if (node.first != "0")
                 fout << node.first << " " << node.second->node_voltage << std::endl;
             else
@@ -119,6 +146,10 @@ namespace PowerGrid {
         fout << "#----------------------------------------------------------------------" << std::endl;
 
         std::cout << "Output element list file complete !" << std::endl;
+
+    }
+
+    PG_Solver::PG_Solver(Solver &linearSolver) : linearSolver(linearSolver) {
 
     }
 }

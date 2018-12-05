@@ -6,6 +6,7 @@
 #define PGSOLVER_PGSOLVER_H
 
 #include "Stamping.h"
+#include "solver/Solver.h"
 
 namespace PowerGrid {
 
@@ -13,15 +14,13 @@ namespace PowerGrid {
 
     public :
 
-        PG_Solver();
+        explicit PG_Solver(Solver &linearSolver);
 
-        ~PG_Solver();
+        ~PG_Solver() = default;
 
         void SolvePowerPlane();
 
         void SolveGNDPlane();
-
-        virtual void solve();
 
         void Cal_Total_Current_Power();
 
@@ -31,7 +30,11 @@ namespace PowerGrid {
 
         void Output_DC_Solution(const std::string &file_name);
 
+    private:
+        Solver &linearSolver;
+
     };
+
 
 }
 

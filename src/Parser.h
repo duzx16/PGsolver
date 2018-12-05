@@ -7,6 +7,7 @@
 
 #include "Elements.h"
 #include "PGSolver.h"
+#include "solver/Solver.h"
 
 namespace PowerGrid {
 
@@ -15,9 +16,9 @@ namespace PowerGrid {
 
     public :
 
-        Parser();
+        explicit Parser(Solver & linearSolver);
 
-        ~Parser();
+        ~Parser() = default;
 
         void Parse_Input(const std::string &file_path);
 

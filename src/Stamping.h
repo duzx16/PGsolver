@@ -23,7 +23,7 @@ namespace PowerGrid {
 
         unsigned int matrix_dim, matrix_dim_gnd;
 
-        std::vector<std::map<unsigned int, double> > MNA, MNA_gnd;
+        std::vector<std::map<unsigned int, double> >  MNA, MNA_gnd;
 
         double *source_vec, *source_vec_gnd;
 

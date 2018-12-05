@@ -4,6 +4,7 @@
 
 #include "Parser.h"
 #include <cctype>
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,9 +13,7 @@
 
 namespace PowerGrid {
 
-    Parser::Parser() : pg_solver() {}
-
-    Parser::~Parser() = default;
+    Parser::Parser(Solver &linearSolver) : pg_solver(linearSolver) {}
 
     void Parser::Parse_Line
             (const std::string &line, const std::string &seperators, std::vector<std::string> &line_element) {
@@ -45,7 +44,6 @@ namespace PowerGrid {
             std::cerr << "no such file under current directory !" << std::endl;
             in.close();
             exit(1);
-
         } else {
 
             std::cout << "Open file success !" << std::endl;
