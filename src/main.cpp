@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
         clock_t start, end;
 
         std::string input_file_name(argv[1]), output_file_name(argv[2]);
-        auto *solver = new EigenSolver();
+        auto *solver = new JacobiSolver(10000, 1e-8, true);
         PowerGrid::Parser parser(*solver);
         start = clock();
         parser.Parse_Input(input_file_name);

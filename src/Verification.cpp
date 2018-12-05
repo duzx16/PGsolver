@@ -12,23 +12,21 @@
 #include <algorithm>
 #include <string>
 
-using Solution_Pair = std::map<std::string, double > ;
+using Solution_Pair = std::map<std::string, double>;
 
 
 void
 Parse_Line
-        (const std::string &line, const std::string &seperators, std::vector<std::string> &line_element)
-{
+        (const std::string &line, const std::string &seperators, std::vector<std::string> &line_element) {
     line_element.clear();
     std::string token;
-    for (size_t i = 0;i<line.length();i++) {
+    for (size_t i = 0; i < line.length(); i++) {
         if (seperators.find(line[i]) != std::string::npos) {
             if (token.size() != 0) {
                 line_element.push_back(token);
                 token.clear();
             }
-        }
-        else token.push_back(line[i]);
+        } else token.push_back(line[i]);
     }
     if (token.size() != 0) {
         line_element.push_back(token);
@@ -39,8 +37,7 @@ Parse_Line
 
 void
 Parse_Input_Sol
-        (const std::string &file_path, Solution_Pair& SolPair)
-{
+        (const std::string &file_path, Solution_Pair &SolPair) {
     std::ifstream in(file_path.c_str(), std::ios::in);
 
     if (in.is_open()) {
@@ -50,8 +47,7 @@ Parse_Input_Sol
         std::vector<std::string> line_elements;
         std::string line;
 
-        while (std::getline(in, line))
-        {
+        while (std::getline(in, line)) {
             Parse_Line(line, " 	", line_elements);
             SolPair.insert(std::pair<std::string, double>(line_elements[0], std::stod(line_elements[1])));
         }
@@ -62,24 +58,26 @@ Parse_Input_Sol
 }
 
 
-
-int main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]) {
     Solution_Pair MySolPair;
     Solution_Pair SpiceSolPair;
 
-    Parse_Input_Sol(argv[1], MySolPair);
-    Parse_Input_Sol(argv[2], SpiceSolPair);
+    Parse_Input_Sol(argv[1], SpiceSolPair);
+    Parse_Input_Sol(argv[2], MySolPair);
 
     std::vector<double> abs_error(SpiceSolPair.size());
     std::vector<double> rel_error(SpiceSolPair.size());
     unsigned int idx = 0;
     double error_sum = 0;
-    for (auto& each_solution : MySolPair)
-    {
+    for (auto &each_solution : MySolPair) {
         error_sum += fabs(each_solution.second - SpiceSolPair[each_solution.first]);
         abs_error[idx] = fabs(each_solution.second - SpiceSolPair[each_solution.first]);
-        rel_error[idx] = fabs(each_solution.second - SpiceSolPair[each_solution.first]) / SpiceSolPair[each_solution.first];
+        if (SpiceSolPair[each_solution.first] != 0.0) {
+            rel_error[idx] =
+                    fabs(each_solution.second - SpiceSolPair[each_solution.first]) / SpiceSolPair[each_solution.first];
+        } else {
+            rel_error[idx] = 0.0;
+        }
         ++idx;
     }
 

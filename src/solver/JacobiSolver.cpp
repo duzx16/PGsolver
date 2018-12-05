@@ -45,13 +45,18 @@ double *JacobiSolver::solve(std::vector<std::map<unsigned int, double> > &A, dou
         for (int i = 0; i < matrix_rank; ++i) {
             new_answer[i] = 0.0;
             for (const auto &it: A[i]) {
-                if (it.first != i) {
+                if (it.first < i && is_gs) {
+                    new_answer[i] -= it.second * new_answer[it.first];
+                } else if(it.first != i) {
                     new_answer[i] -= it.second * answer[it.first];
                 }
             }
             new_answer[i] += b[i];
         }
-        printf("error: %lf\n", norm2(answer, new_answer, matrix_rank));
+        double error = norm2(answer, new_answer, matrix_rank);
+        if (error < error_limit) {
+            break;
+        }
         std::swap(new_answer, answer);
     }
     return answer;
