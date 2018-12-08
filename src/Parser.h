@@ -11,12 +11,11 @@
 
 namespace PowerGrid {
 
-    class Parser
-    {
+    class Parser {
 
     public :
 
-        explicit Parser(Solver & linearSolver);
+        explicit Parser(Solver &linearSolver);
 
         ~Parser() = default;
 
@@ -27,7 +26,7 @@ namespace PowerGrid {
     private :
 
         void Parse_Line
-                (const std::string &line, const std::string &seperators, std::vector<std::string> &line_element);
+                (const char *line, ssize_t linesz, std::vector<std::string> &line_element);
 
         PowerGrid::Resistor *res;
 

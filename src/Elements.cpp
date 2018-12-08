@@ -73,7 +73,7 @@ namespace PowerGrid {
     Node::Node() = default;
 
     Node::Node(std::string n)
-            : node_name(n), is_connect_V(false), is_grounded(false),
+            : node_name(std::move(n)), is_connect_V(false), is_grounded(false),
               is_stamp(true), is_merged(false), is_power_plane(false) {
         ParseNodeInfo(n, "_nX");
     }

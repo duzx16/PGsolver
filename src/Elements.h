@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <queue>
 #include <string>
 
@@ -121,7 +122,7 @@ namespace PowerGrid {
 
         void Output_Info();
 
-        std::map<std::string, Node *> total_nodes;
+        std::unordered_map<std::string, Node *> total_nodes;
         std::map<std::string, Node *> PowerPlaneNodes, GNDPlaneNodes;
         std::map<VoltageSource *, Node *> total_supply_Vsource;
         std::vector<Resistor *> total_shorted_Res;

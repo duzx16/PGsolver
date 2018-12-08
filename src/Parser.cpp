@@ -6,58 +6,60 @@
 #include <cctype>
 #include <stdlib.h>
 #include <iostream>
-#include <fstream>
+#include <sstream>
+#include <stdio.h>
+#include <cctype>
 #include <string>
 #include <vector>
 #include <map>
+#include <sstream>
 
 namespace PowerGrid {
 
     Parser::Parser(Solver &linearSolver) : pg_solver(linearSolver) {}
 
     void Parser::Parse_Line
-            (const std::string &line, const std::string &seperators, std::vector<std::string> &line_element) {
+            (const char *line, ssize_t linesz, std::vector<std::string> &line_element) {
         line_element.clear();
-        std::string token;
-        for (char i : line) {
-            if (seperators.find(i) != std::string::npos) {
-                if (!token.empty()) {
-                    line_element.push_back(token);
-                    token.clear();
+        int start = 0;
+        for (unsigned i = 0; i < linesz; ++i) {
+            if (isspace(line[i])) {
+                if (i - start > 0) {
+                    line_element.emplace_back(line + start, i - start);
+                    start = i + 1;
+                } else {
+                    start = i + 1;
                 }
-            } else token.push_back(i);
+            }
         }
-        if (!token.empty()) {
-            line_element.push_back(token);
-            token.clear();
+        if (start < linesz) {
+            line_element.emplace_back(line + start, linesz - start);
         }
-
     }
 
     void
     Parser::Parse_Input
             (const std::string &file_path) {
-        std::ifstream in(file_path.c_str(), std::ios::in);
+        FILE *ifile = fopen(file_path.c_str(), "r");
 
-        if (!in.is_open()) {
-
+        if (ifile == nullptr) {
             std::cerr << "no such file under current directory !" << std::endl;
-            in.close();
             exit(1);
         } else {
 
             std::cout << "Open file success !" << std::endl;
 
             std::vector<std::string> line_elements;
-            std::string line;
-            while (std::getline(in, line)) {
+            char *line = nullptr;
+            size_t linesz = 0;
+            while (getline(&line, &linesz, ifile) > 0) {
 
-                Parse_Line(line, "	 \n", line_elements);
+                Parse_Line(line, linesz, line_elements);
 
                 if (!line_elements.empty())
                     switch (char( std::toupper(line_elements[0].at(0))))
                 {
-                    case 'V': {
+                    case 'V':
                         if (stod(line_elements[3]) != 0) {
                             // V != 0 两节点间存在电势差
                             volt = new PowerGrid::VoltageSource
@@ -104,8 +106,7 @@ namespace PowerGrid {
                             pg_solver.total_shorted_Res.emplace_back(res);
 
                         }
-                        break;
-                    }
+                    break;
                     case 'I':
 
                         curr = new PowerGrid::CurrentSource
@@ -174,7 +175,8 @@ namespace PowerGrid {
             }
 
             std::cout << "Parse input file complete ! " << std::endl;
-            in.close();
+            free(line);
+            fclose(ifile);
         }
 
     }
