@@ -2,7 +2,7 @@
 // Created by Zhengxiao Du on 2018/12/4.
 //
 
-#include "JacobiSolver.h"
+#include "SORSolver.h"
 #include <cmath>
 
 double norm2(const double *x1, const double *x2, unsigned dim) {
@@ -13,7 +13,7 @@ double norm2(const double *x1, const double *x2, unsigned dim) {
     return sqrt(sum / dim);
 }
 
-double *JacobiSolver::solve(std::vector<std::map<unsigned int, double> > &A, double *b) {
+double *SORSolver::solve(std::vector<std::map<unsigned int, double> > &A, double *b) {
     unsigned long matrix_rank = A.size();
     // 使用Jacobi迭代或者GS迭代
     // 将矩阵的对角元归一化
@@ -43,17 +43,20 @@ double *JacobiSolver::solve(std::vector<std::map<unsigned int, double> > &A, dou
     }
     for (int num = 0; num < iterate_limit; ++num) {
         for (int i = 0; i < matrix_rank; ++i) {
-            new_answer[i] = 0.0;
+            double x_i = 0.0;
             for (const auto &it: A[i]) {
                 if (it.first < i && is_gs) {
-                    new_answer[i] -= it.second * new_answer[it.first];
-                } else if(it.first != i) {
-                    new_answer[i] -= it.second * answer[it.first];
+                    x_i -= it.second * new_answer[it.first];
+                } else {
+                    x_i -= it.second * answer[it.first];
                 }
             }
-            new_answer[i] += b[i];
+            x_i += b[i];
+            x_i = x_i * omega + answer[i];
+            new_answer[i] = x_i;
         }
         double error = norm2(answer, new_answer, matrix_rank);
+        printf("%le\n", error);
         if (error < error_limit) {
             break;
         }

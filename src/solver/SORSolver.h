@@ -9,16 +9,22 @@
 #include <map>
 #include "Solver.h"
 
-class JacobiSolver : public Solver {
+class SORSolver : public Solver {
 public:
     double *solve(std::vector<std::map<unsigned int, double> > &A, double *b) override;
 
-    JacobiSolver(int iterate, double error, bool is_gs) : iterate_limit(iterate), error_limit(error), is_gs(is_gs) {}
+    SORSolver(int iterate, double error, bool is_gs, double omega = 1.0) : iterate_limit(iterate), error_limit(error),
+                                                                           is_gs(is_gs), omega(omega) {
+        if (!is_gs) {
+            this->omega = 1.0;
+        }
+    }
 
 private:
     int iterate_limit = 50000;
     double error_limit = 1e-10;
     bool is_gs;
+    double omega;
 };
 
 
