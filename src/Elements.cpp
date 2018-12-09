@@ -154,7 +154,7 @@ namespace PowerGrid {
 
     void Elements::CircuitPartition() {
         // 划分VDD和VSS平面
-        std::map<std::string, bool> visit;
+        std::unordered_map<std::string, bool> visit;
 
         for (auto &VNode : total_supply_Vsource) {
             std::queue<Node *> NodeQueue;

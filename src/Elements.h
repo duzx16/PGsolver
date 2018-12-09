@@ -123,7 +123,7 @@ namespace PowerGrid {
         void Output_Info();
 
         std::unordered_map<std::string, Node *> total_nodes;
-        std::map<std::string, Node *> PowerPlaneNodes, GNDPlaneNodes;
+        std::unordered_map<std::string, Node *> PowerPlaneNodes, GNDPlaneNodes;
         std::map<VoltageSource *, Node *> total_supply_Vsource;
         std::vector<Resistor *> total_shorted_Res;
         std::vector<Resistor *> total_unshorted_Res;
