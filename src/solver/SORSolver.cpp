@@ -13,7 +13,7 @@ double norm2(const double *x1, const double *x2, unsigned dim) {
     return sqrt(sum / dim);
 }
 
-double *SORSolver::solve(std::vector<std::map<unsigned int, double> > &A, double *b) {
+double *SORSolver::solve(std::vector<PowerGrid::SparseRow> &A, double *b) {
     unsigned long matrix_rank = A.size();
     // 使用Jacobi迭代或者GS迭代
     // 将矩阵的对角元归一化

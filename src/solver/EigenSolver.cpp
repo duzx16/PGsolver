@@ -11,7 +11,7 @@
 
 typedef Eigen::Triplet<double> triplet;
 
-double *EigenSolver::solve(std::vector<std::map<unsigned int, double> > &A, double *b) {
+double *EigenSolver::solve(std::vector<PowerGrid::SparseRow> &A, double *b) {
     unsigned long matrix_dim = A.size();
     std::vector<triplet> tripletList;
     Eigen::SparseMatrix<double> Mat(matrix_dim, matrix_dim);

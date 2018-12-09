@@ -9,7 +9,7 @@
 
 class EigenSolver: public Solver {
 public:
-    double * solve(std::vector<std::map<unsigned int, double> > & A, double *b) override;
+    double * solve(std::vector<PowerGrid::SparseRow> & A, double *b) override;
 };
 
 

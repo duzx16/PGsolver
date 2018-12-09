@@ -5,13 +5,15 @@
 #include "Stamping.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <list>
 
 namespace PowerGrid {
 
     Stamping::Stamping() = default;
 
-
     void Stamping::StampPowerPlane() {
+        // 生成需要求解的矩阵
         matrix_dim = static_cast<unsigned int>(power_stamp_NodeList.size());
         std::cout << "Total power plane matrix dimension = " << matrix_dim << std::endl;
         MNA.resize(matrix_dim);
@@ -61,7 +63,7 @@ namespace PowerGrid {
 
 
     void Stamping::StampGNDPlane() {
-
+        // 生成需要求解的矩阵
         matrix_dim_gnd = static_cast<unsigned int>(gnd_stamp_NodeList.size());
         std::cout << "Total gnd plane matrix dimension = " << matrix_dim_gnd << std::endl;
         MNA_gnd.resize(matrix_dim_gnd);
@@ -109,7 +111,5 @@ namespace PowerGrid {
         std::cout << "Stammping GND Plane Complete !" << std::endl;
 
     }
-
-
 }
 

@@ -11,8 +11,16 @@
 #include <unordered_map>
 #include <queue>
 #include <string>
+#include <list>
 
 namespace PowerGrid {
+
+    bool column_compare(const std::pair<unsigned int, double> &a, const unsigned &b);
+
+    class SparseRow : public std::list<std::pair<unsigned int, double>> {
+    public:
+        double &operator[](unsigned index);
+    };
 
     struct CurrentSource;
     struct VoltageSource;

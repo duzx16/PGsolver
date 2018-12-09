@@ -11,7 +11,7 @@
 
 class SORSolver : public Solver {
 public:
-    double *solve(std::vector<std::map<unsigned int, double> > &A, double *b) override;
+    double *solve(std::vector<PowerGrid::SparseRow> &A, double *b) override;
 
     SORSolver(int iterate, double error, bool is_gs, double omega = 1.0) : iterate_limit(iterate), error_limit(error),
                                                                            is_gs(is_gs), omega(omega) {

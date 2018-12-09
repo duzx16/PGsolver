@@ -10,13 +10,25 @@
 #include <string>
 
 namespace PowerGrid {
+    bool column_compare(const std::pair<unsigned int, double> &a, const unsigned &b) {
+        return a.first < b;
+    }
+
+    double &SparseRow::operator[](unsigned index) {
+        auto it = std::lower_bound(begin(), end(), index, column_compare);
+        if (it == end() || it->first != index) {
+            it = insert(it, {index, 0.0});
+        }
+        return it->second;
+    }
 
     Resistor::Resistor() = default;
 
     Resistor::~Resistor() = default;
 
     Resistor::Resistor(std::string n, std::string pos, std::string neg, double value)
-            : res_name(std::move(n)), pos_node(std::move(pos)), neg_node(std::move(neg)), res_value(value), is_merged(false),
+            : res_name(std::move(n)), pos_node(std::move(pos)), neg_node(std::move(neg)), res_value(value),
+              is_merged(false),
               current_source_recorder(0) {}
 
     void Resistor::Add_Node(Node *n1, Node *n2) {
