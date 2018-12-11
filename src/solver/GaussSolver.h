@@ -10,7 +10,7 @@
 class GaussSolver: public Solver {
 public:
     GaussSolver() = default;
-    double * solve(std::vector<PowerGrid::SparseRow> & A, double *b) override;
+    double * solve(std::vector<SparseRow> & A, double *b) override;
 
 };
 

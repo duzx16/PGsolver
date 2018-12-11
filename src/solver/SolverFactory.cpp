@@ -6,6 +6,7 @@
 #include "GaussSolver.h"
 #include "EigenSolver.h"
 #include "SORSolver.h"
+#include "ConjugateGradient.h"
 #include <cctype>
 
 Solver *SolverFactory::create(std::string method, double param) {
@@ -22,6 +23,8 @@ Solver *SolverFactory::create(std::string method, double param) {
         return new GaussSolver();
     } else if (method == "sor") {
         return new SORSolver(10000, 1e-8, true, param);
+    } else if(method == "cg") {
+        return new ConjugateGradient();
     }
     return nullptr;
 }

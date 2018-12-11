@@ -7,7 +7,7 @@
 
 class Solver {
 public:
-    virtual double *solve(std::vector<PowerGrid::SparseRow> &A, double *b) = 0;
+    virtual double *solve(std::vector<SparseRow> &A, double *b) = 0;
 
     virtual ~Solver() = default;
 };

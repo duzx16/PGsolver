@@ -13,14 +13,14 @@
 #include <string>
 #include <list>
 
+class SparseRow : public std::list<std::pair<unsigned int, double>> {
+public:
+    double &operator[](unsigned index);
+};
+
 namespace PowerGrid {
 
     bool column_compare(const std::pair<unsigned int, double> &a, const unsigned &b);
-
-    class SparseRow : public std::list<std::pair<unsigned int, double>> {
-    public:
-        double &operator[](unsigned index);
-    };
 
     struct CurrentSource;
     struct VoltageSource;

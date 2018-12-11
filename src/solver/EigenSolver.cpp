@@ -11,7 +11,7 @@
 
 typedef Eigen::Triplet<double> triplet;
 
-double *EigenSolver::solve(std::vector<PowerGrid::SparseRow> &A, double *b) {
+double *EigenSolver::solve(std::vector<SparseRow> &A, double *b) {
     unsigned long matrix_dim = A.size();
     std::vector<triplet> tripletList;
     Eigen::SparseMatrix<double> Mat(matrix_dim, matrix_dim);
@@ -30,7 +30,7 @@ double *EigenSolver::solve(std::vector<PowerGrid::SparseRow> &A, double *b) {
         b_vec[i] = b[i];
     }
 
-    Eigen::SimplicialLLT<Eigen::SparseMatrix<double>> solver;
+    Eigen::ConjugateGradient<Eigen::SparseMatrix<double>> solver;
     solver.compute(Mat);
     if (solver.info() != Eigen::Success) {
         std::cerr << "Matrix decomposition failed !" << std::endl;

@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
         clock_t start, end;
 
         std::string input_file_name(argv[1]), output_file_name(argv[2]);
-        auto * solver = SolverFactory::create("sor", 1.5);
+        auto * solver = SolverFactory::create("eigen", 1.5);
         PowerGrid::Parser parser(*solver);
         start = clock();
         parser.Parse_Input(input_file_name);

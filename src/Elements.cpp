@@ -9,18 +9,19 @@
 #include <fstream>
 #include <string>
 
-namespace PowerGrid {
-    bool column_compare(const std::pair<unsigned int, double> &a, const unsigned &b) {
-        return a.first < b;
-    }
+bool column_compare(const std::pair<unsigned int, double> &a, const unsigned &b) {
+    return a.first < b;
+}
 
-    double &SparseRow::operator[](unsigned index) {
-        auto it = std::lower_bound(begin(), end(), index, column_compare);
-        if (it == end() || it->first != index) {
-            it = insert(it, {index, 0.0});
-        }
-        return it->second;
+double &SparseRow::operator[](unsigned index) {
+    auto it = std::lower_bound(begin(), end(), index, column_compare);
+    if (it == end() || it->first != index) {
+        it = insert(it, {index, 0.0});
     }
+    return it->second;
+}
+
+namespace PowerGrid {
 
     Resistor::Resistor() = default;
 

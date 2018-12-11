@@ -6,7 +6,7 @@
 #include <cmath>
 #include <algorithm>
 
-double *GaussSolver::solve(std::vector<PowerGrid::SparseRow> &A, double *b) {
+double *GaussSolver::solve(std::vector<SparseRow> &A, double *b) {
     auto matrix_rank = A.size();
     auto answer = new double[matrix_rank];
     for (unsigned current = 0; current < matrix_rank; ++current) {

@@ -4,7 +4,9 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/EigenSolver.h
         ${CMAKE_CURRENT_SOURCE_DIR}/SORSolver.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GaussSolver.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/ConjugateGradient.h
         ${CMAKE_CURRENT_SOURCE_DIR}/SolverFactory.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils.h
         PARENT_SCOPE
         )
 
@@ -13,6 +15,8 @@ set(SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/EigenSolver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SORSolver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GaussSolver.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ConjugateGradient.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SolverFactory.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils.cpp
         PARENT_SCOPE
         )
