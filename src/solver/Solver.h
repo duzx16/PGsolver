@@ -8,6 +8,8 @@
 class Solver {
 public:
     virtual double *solve(std::vector<PowerGrid::SparseRow> &A, double *b) = 0;
+
+    virtual ~Solver() = default;
 };
 
 #endif //PGSOLVER_SOLVER_H

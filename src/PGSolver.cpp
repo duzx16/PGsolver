@@ -19,7 +19,12 @@ namespace PowerGrid {
 
     void PG_Solver::SolvePowerPlane() {
         std::cout << "Solving Power plane ..." << std::endl;
-        double *x = linearSolver.solve(MNA, source_vec);
+        std::vector<SparseRow> A;
+        A.resize(MNA.size());
+        for (int i = 0; i < MNA.size(); ++i) {
+            A[i].insert(A[i].begin(), MNA[i].begin(), MNA[i].end());
+        }
+        double *x = linearSolver.solve(A, source_vec);
         for (const auto &node:power_stamp_NodeList) {
             node.first->node_voltage = x[node.second];
             MergeNodeMap(node.first, x[node.second]);
@@ -29,7 +34,12 @@ namespace PowerGrid {
 
     void PG_Solver::SolveGNDPlane() {
         std::cout << "Solving GND plane ..." << std::endl;
-        double *x = linearSolver.solve(MNA_gnd, source_vec_gnd);
+        std::vector<SparseRow> A;
+        A.resize(MNA_gnd.size());
+        for (int i = 0; i < MNA_gnd.size(); ++i) {
+            A[i].insert(A[i].begin(), MNA_gnd[i].begin(), MNA_gnd[i].end());
+        }
+        double *x = linearSolver.solve(A, source_vec_gnd);
         for (const auto &node:gnd_stamp_NodeList) {
             node.first->node_voltage = x[node.second];
             MergeNodeMap(node.first, x[node.second]);

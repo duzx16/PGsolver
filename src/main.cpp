@@ -1,9 +1,6 @@
 #include <iostream>
 #include "Parser.h"
-#include "solver/EigenSolver.h"
-#include "solver/SORSolver.h"
-#include "solver/EigenSolver.h"
-#include "solver/GaussSolver.h"
+#include "solver/SolverFactory.h"
 
 //int main(int argc, char *argv[]) {
 //    auto *solver = new GaussSolver();
@@ -32,15 +29,7 @@ int main(int argc, char *argv[]) {
         clock_t start, end;
 
         std::string input_file_name(argv[1]), output_file_name(argv[2]);
-//        // Jacobi迭代
-//        auto *solver = new SORSolver(10000, 1e-8, false, 1.0);
-//        // GS迭代
-//        auto *solver = new SORSolver(10000, 1e-8, true, 1.0);
-        // 超松弛迭代
-        auto *solver = new SORSolver(50000, 1e-10, true, 1.5);
-        // 高斯消元
-//        auto *solver = new GaussSolver();
-//        auto *solver = new EigenSolver();
+        auto * solver = SolverFactory::create("sor", 1.5);
         PowerGrid::Parser parser(*solver);
         start = clock();
         parser.Parse_Input(input_file_name);
