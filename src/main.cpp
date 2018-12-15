@@ -1,19 +1,34 @@
 #include <iostream>
 #include "Parser.h"
 #include "solver/SolverFactory.h"
+#include "CLI11.hpp"
 #include <omp.h>
 
 
 int main(int argc, char *argv[]) {
     std::ios_base::sync_with_stdio(false);
-    if (argc == 3) {
+    CLI::App app{"PowerGrid Solver"};
+    std::string input_filename, output_filename, method="cg";
+    double omega = 1.5;
+    app.add_option("input", input_filename, "The filename to get the input");
+    app.add_option("output, -o, --output", output_filename, "The filename to output result");
+    app.add_option("-m, --method", method,
+                   "The method to solve the linear equations, support: eigen, cg(conjugate gradient), sor(successive over-relaxation), gauss, jacobi, gs(gauss-seidel)");
+    app.add_option("-r, --ratio", omega, "The relaxation factor omega in sor");
+    app.set_help_flag("-h, --help", "Show help");
+
+    CLI11_PARSE(app, argc, argv);
+
+    if (!input_filename.empty()) {
+        if (output_filename.empty()) {
+            output_filename = input_filename + ".output";
+        }
         clock_t start, end;
 
-        std::string input_file_name(argv[1]), output_file_name(argv[2]);
-        auto * solver = SolverFactory::create("cg", 1.5);
+        auto *solver = SolverFactory::create(method, omega);
         PowerGrid::Parser parser(*solver);
         start = clock();
-        parser.Parse_Input(input_file_name);
+        parser.Parse_Input(input_filename);
         end = clock();
         std::cout << "Parse Input time = " << (double) (end - start) / CLOCKS_PER_SEC << std::endl;
         start = clock();
@@ -33,16 +48,15 @@ int main(int argc, char *argv[]) {
         parser.pg_solver.SolveGNDPlane();
         end_time = omp_get_wtime();
         std::cout << "Eigen Solver elapsed time = " << (end_time - start_time) << std::endl;
-        parser.pg_solver.Output_DC_Solution(output_file_name);
-
-//        start = clock();
+        parser.pg_solver.Output_DC_Solution(output_filename);
+        //        start = clock();
 //        parser.pg_solver.Cal_Total_Current_Power();
 //        end = clock();
 //        std::cout << "Current and power calculation time = " << (double) (end - start) / CLOCKS_PER_SEC << std::endl;
 //        parser.pg_solver.Output_Element_Solution();
-
         delete solver;
-    } else
-        std::cerr << "invalid input arguments !" << std::endl;
+    }
+
+
     return 0;
 }
