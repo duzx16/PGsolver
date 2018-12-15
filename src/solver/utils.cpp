@@ -2,7 +2,7 @@
 // Created by Zhengxiao Du on 2018-12-11.
 //
 #include "utils.h"
-
+#include <omp.h>
 
 double vector_dot(const double *vec1, const double *vec2, unsigned dim) {
     double r = 0.0;
@@ -35,6 +35,10 @@ double norm(const SparseRow &vec) {
 }
 
 void matrix_multiply(const std::vector<SparseRow> &mat, double *vec, double * r) {
+//#pragma omp_set_num_threads(4)
+//#pragma omp parallel for schedule(dynamic, 1)
+#pragma omp parallel
+#pragma omp for
     for (int i = 0; i < mat.size(); ++i) {
         r[i] = 0.0;
         for (const auto &ele: mat[i]) {

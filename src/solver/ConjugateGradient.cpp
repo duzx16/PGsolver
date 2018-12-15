@@ -13,7 +13,8 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
         Mi[i] = 0.0;
         for (const auto &ele: A[i]) {
             if (ele.first == i) {
-                Mi[i] = 1 / ele.second;
+//                Mi[i] = 1 / ele.second;
+                Mi[i] = 1.0;
             }
         }
         if (Mi[i] == 0.0) {
@@ -38,11 +39,13 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
     }
     auto Ap = new double[matrix_rank];
     double alpha, beta, r_k2 = vector_dot(r_k, z_k, matrix_rank);
+    int iter_num = 0;
     while (true) {
+        iter_num += 1;
         printf("%le\n", r_k2);
         matrix_multiply(A, p_k, Ap);
         double pAp = vector_dot(p_k, Ap, matrix_rank);
-        if (pAp < 1e-8) {
+        if (pAp < 1e-12) {
             break;
         }
         alpha = r_k2 / pAp;
@@ -52,7 +55,7 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
         for (int i = 0; i < matrix_rank; ++i) {
             r_k[i] -= alpha * Ap[i];
         }
-        if (norm(r_k, matrix_rank) < 1e-8) {
+        if (norm(r_k, matrix_rank) < 1e-12) {
             break;
         }
         double old_rk2 = r_k2;
@@ -65,5 +68,6 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
             p_k[i] = p_k[i] * beta + z_k[i];
         }
     }
+    printf("Iter num:%d\n", iter_num);
     return x_k;
 }
