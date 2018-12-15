@@ -15,10 +15,14 @@ namespace PowerGrid {
     void Stamping::StampPowerPlane() {
         // 生成需要求解的矩阵
         matrix_dim = static_cast<unsigned int>(power_stamp_NodeList.size());
+#ifndef NO_OUTPUT
         std::cout << "Total power plane matrix dimension = " << matrix_dim << std::endl;
+#endif
         MNA.resize(matrix_dim);
         source_vec = new double[matrix_dim]();
+#ifndef NO_OUTPUT
         std::cout << "Stampping ..." << std::endl;
+#endif
 
         for (auto &stamp_node : power_stamp_NodeList) {
             for (auto &nei_node : stamp_node.first->neighbor_NodeRes) {
@@ -57,7 +61,9 @@ namespace PowerGrid {
                 }
             }
         }
+#ifndef NO_OUTPUT
         std::cout << "Stammping Power Plane Complete !" << std::endl;
+#endif
 
     }
 
@@ -65,10 +71,14 @@ namespace PowerGrid {
     void Stamping::StampGNDPlane() {
         // 生成需要求解的矩阵
         matrix_dim_gnd = static_cast<unsigned int>(gnd_stamp_NodeList.size());
+#ifndef NO_OUTPUT
         std::cout << "Total gnd plane matrix dimension = " << matrix_dim_gnd << std::endl;
+#endif
         MNA_gnd.resize(matrix_dim_gnd);
         source_vec_gnd = new double[matrix_dim_gnd]();
+#ifndef NO_OUTPUT
         std::cout << "Stampping ..." << std::endl;
+#endif
 
 
         for (auto &stamp_node : gnd_stamp_NodeList) {
@@ -108,7 +118,9 @@ namespace PowerGrid {
                 }
             }
         }
+#ifndef NO_OUTPUT
         std::cout << "Stammping GND Plane Complete !" << std::endl;
+#endif
 
     }
 }

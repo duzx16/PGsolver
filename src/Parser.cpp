@@ -46,8 +46,9 @@ namespace PowerGrid {
             std::cerr << "no such file under current directory !" << std::endl;
             exit(1);
         } else {
-
+#ifndef NO_OUTPUT
             std::cout << "Open file success !" << std::endl;
+#endif
 
             std::vector<std::string> line_elements;
             char *line = nullptr;
@@ -173,8 +174,9 @@ namespace PowerGrid {
                         break;
                 }
             }
-
+#ifndef NO_OUTPUT
             std::cout << "Parse input file complete ! " << std::endl;
+#endif
             free(line);
             fclose(ifile);
         }

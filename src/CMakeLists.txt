@@ -13,6 +13,8 @@ if (USE_OPENMP)
     target_link_libraries(${CMAKE_PROJECT_NAME}_lib OpenMP::OpenMP_CXX)
 endif ()
 
+add_definitions(-DNO_OUTPUT)
+
 add_executable(${CMAKE_PROJECT_NAME} main.cpp Parser.cpp Elements.cpp PGSolver.cpp Stamping.cpp)
 add_executable(Verification Verification.cpp)
 

@@ -9,7 +9,12 @@
 
 class ConjugateGradient : public Solver {
 public:
-    double * solve(std::vector<SparseRow> & A, double *b) override;
+    explicit ConjugateGradient(bool preconditioned = true, bool show_process = false) : Solver(show_process), precontioned(preconditioned) {}
+
+    double *solve(std::vector<SparseRow> &A, double *b) override;
+
+protected:
+    bool precontioned;
 };
 
 

@@ -18,7 +18,9 @@ namespace PowerGrid {
     }
 
     void PG_Solver::SolvePowerPlane() {
+#ifndef NO_OUTPUT
         std::cout << "Solving Power plane ..." << std::endl;
+#endif
         std::vector<SparseRow> A;
         A.resize(MNA.size());
         for (int i = 0; i < MNA.size(); ++i) {
@@ -33,7 +35,9 @@ namespace PowerGrid {
     }
 
     void PG_Solver::SolveGNDPlane() {
+#ifndef NO_OUTPUT
         std::cout << "Solving GND plane ..." << std::endl;
+#endif
         std::vector<SparseRow> A;
         A.resize(MNA_gnd.size());
         for (int i = 0; i < MNA_gnd.size(); ++i) {
@@ -67,15 +71,18 @@ namespace PowerGrid {
 
 
         fout << std::endl << std::endl;
+#ifndef NO_OUTPUT
         std::cout << "Output solution complete !" << std::endl;
+#endif
         fout.close();
 
     }
 
 
     void PG_Solver::Cal_Total_Current_Power() {
-
+#ifndef NO_OUTPUT
         std::cout << "Calculating current and power dissipation ..." << std::endl;
+#endif
 
         for (auto &supply_node : total_supply_Vsource) {
             double total_current = 0;

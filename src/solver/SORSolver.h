@@ -13,8 +13,14 @@ class SORSolver : public Solver {
 public:
     double *solve(std::vector<SparseRow> &A, double *b) override;
 
-    SORSolver(int iterate, double error, bool is_gs, double omega = 1.0) : iterate_limit(iterate), error_limit(error),
-                                                                           is_gs(is_gs), omega(omega) {
+    SORSolver(int iterate, double error, bool is_gs, double omega = 1.0, bool show_process = false) : Solver(
+            show_process),
+                                                                                                      iterate_limit(
+                                                                                                              iterate),
+                                                                                                      error_limit(
+                                                                                                              error),
+                                                                                                      is_gs(is_gs),
+                                                                                                      omega(omega) {
         if (!is_gs) {
             this->omega = 1.0;
         }

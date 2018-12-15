@@ -7,10 +7,11 @@
 
 #include "Solver.h"
 
-class GaussSolver: public Solver {
+class GaussSolver : public Solver {
 public:
-    GaussSolver() = default;
-    double * solve(std::vector<SparseRow> & A, double *b) override;
+    GaussSolver(bool show_process = false) : Solver(show_process) {}
+
+    double *solve(std::vector<SparseRow> &A, double *b) override;
 
 };
 

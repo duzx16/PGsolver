@@ -10,15 +10,20 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
     unsigned matrix_rank = A.size();
     auto Mi = new double[matrix_rank];
     for (int i = 0; i < matrix_rank; ++i) {
-        Mi[i] = 0.0;
-        for (const auto &ele: A[i]) {
-            if (ele.first == i) {
-                Mi[i] = 1 / ele.second;
+        if (precontioned) {
+            Mi[i] = 0.0;
+            for (const auto &ele: A[i]) {
+                if (ele.first == i) {
+                    Mi[i] = 1 / ele.second;
+                }
             }
+            if (Mi[i] == 0.0) {
+                fprintf(stderr, "The matrix can't be solved\n");
+            }
+        } else {
+            Mi[i] = 1.0;
         }
-        if (Mi[i] == 0.0) {
-            fprintf(stderr, "The matrix can't be solved\n");
-        }
+
     }
     auto x_k = new double[matrix_rank];
     for (int i = 0; i < matrix_rank; ++i) {
@@ -41,7 +46,8 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
     int iter_num = 0;
     while (true) {
         iter_num += 1;
-//        printf("%le\n", r_k2);
+        if (show_process)
+            printf("%le\n", r_k2);
         matrix_multiply(A, p_k, Ap);
         double pAp = vector_dot(p_k, Ap, matrix_rank);
         if (pAp < 1e-12) {
@@ -67,6 +73,8 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
             p_k[i] = p_k[i] * beta + z_k[i];
         }
     }
+#ifndef NO_OUTPUT
     printf("Iter num:%d\n", iter_num);
+#endif
     return x_k;
 }

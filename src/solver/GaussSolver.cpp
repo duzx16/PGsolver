@@ -10,14 +10,10 @@ double *GaussSolver::solve(std::vector<SparseRow> &A, double *b) {
     auto matrix_rank = A.size();
     auto answer = new double[matrix_rank];
     for (unsigned current = 0; current < matrix_rank; ++current) {
-//        printf("begin %d %lu\n", current, A[current].size());
         int max_row = -1;
         double max_ele = 0.0;
         for (unsigned j = current; j < matrix_rank; ++j) {
             auto it = A[j].begin();
-//            if (it != A[j].end() && it->first <= current) {
-//                printf("%d %d\n", j, it->first);
-//            }
             if (it != A[j].end() && it->first == current) {
                 if (fabs(it->second) > max_ele) {
                     max_row = j;
@@ -68,7 +64,6 @@ double *GaussSolver::solve(std::vector<SparseRow> &A, double *b) {
             }
         }
         answer[k] /= main_ele;
-//        printf("%lf\n", answer[k]);
     }
     return answer;
 }

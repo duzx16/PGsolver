@@ -10,7 +10,7 @@
 
 class SolverFactory {
 public:
-    static Solver *create(std::string method, double param=0.0);
+    static Solver *create(std::string method, double param = 0.0, bool show_process = false);
 };
 
 

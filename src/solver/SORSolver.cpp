@@ -56,7 +56,9 @@ double *SORSolver::solve(std::vector<SparseRow> &A, double *b) {
             new_answer[i] = x_i;
         }
         double error = norm2(answer, new_answer, matrix_rank);
-        printf("%le\n", error);
+        if (show_process) {
+            printf("%le\n", error);
+        }
         if (error < error_limit) {
             break;
         }

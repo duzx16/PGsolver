@@ -195,11 +195,12 @@ namespace PowerGrid {
                 GNDPlaneNodes[node.first] = node.second;
             }
         }
-
+#ifndef NO_OUTPUT
         std::cout << "Total Power Plane Nodes = " << PowerPlaneNodes.size() << std::endl;
         std::cout << "Total GND   Plane Nodes = " << GNDPlaneNodes.size() << std::endl;
 
         std::cout << "Circuit Partitioning complete !" << std::endl;
+#endif
     }
 
 
@@ -292,7 +293,9 @@ namespace PowerGrid {
             }
         }
 
+#ifndef NO_OUTPUT
         std::cout << "Node mapping complete !" << std::endl;
+#endif
 
     }
 
