@@ -14,15 +14,15 @@ Solver *SolverFactory::create(std::string method, double param, bool show_proces
         c = ::tolower(c);
     });
     if (method == "jacobi") {
-        return new SORSolver(10000, 1e-10, false, 1.0, show_process);
+        return new SORSolver(20000, 1e-9, false, 1.0, show_process);
     } else if (method == "gs") {
-        return new SORSolver(10000, 1e-10, true, 1.0, show_process);
+        return new SORSolver(20000, 1e-9, true, 1.0, show_process);
     } else if (method == "eigen") {
         return new EigenSolver();
     } else if (method == "gauss") {
         return new GaussSolver(show_process);
     } else if (method == "sor") {
-        return new SORSolver(10000, 1e-10, true, param, show_process);
+        return new SORSolver(20000, 1e-9, true, param, show_process);
     } else if (method == "cg") {
         return new ConjugateGradient(false, show_process);
     } else if (method == "pcg") {

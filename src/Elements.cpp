@@ -213,11 +213,11 @@ namespace PowerGrid {
         merged_node->is_merged = true;
 
         for (auto &neighbor_nodes : merged_node->neighbor_NodeRes) {
-            if (neighbor_nodes.first != self && neighbor_nodes.first->is_merged == false) {
+            if (neighbor_nodes.first != self && !neighbor_nodes.first->is_merged) {
 
                 bool is_short = false;
                 for (auto &each_neighbor_node_res : neighbor_nodes.second) {
-                    if (each_neighbor_node_res->res_value == 0) {
+                    if (each_neighbor_node_res->res_value < 1e-5) {
                         root->Merge_Neighbor_NodeRes(neighbor_nodes.first, neighbor_nodes.second);
                         each_neighbor_node_res->is_merged = true;
                         Merge_Node(root, merged_node, neighbor_nodes.first);

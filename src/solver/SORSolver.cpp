@@ -41,7 +41,8 @@ double *SORSolver::solve(std::vector<SparseRow> &A, double *b) {
         answer[i] = 0.0;
         new_answer[i] = 0.0;
     }
-    for (int num = 0; num < iterate_limit; ++num) {
+    int num;
+    for (num = 0; num < iterate_limit; ++num) {
         for (int i = 0; i < matrix_rank; ++i) {
             double x_i = 0.0;
             for (const auto &it: A[i]) {
@@ -64,5 +65,6 @@ double *SORSolver::solve(std::vector<SparseRow> &A, double *b) {
         }
         std::swap(new_answer, answer);
     }
+    printf("Iter num:%d\n", num);
     return answer;
 }

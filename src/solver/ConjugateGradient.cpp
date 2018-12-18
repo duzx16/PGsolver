@@ -5,8 +5,11 @@
 #include "ConjugateGradient.h"
 #include <stdio.h>
 #include "utils.h"
+#include <cstdlib>
+#include <ctime>
 
 double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
+    std::srand(static_cast<unsigned int>(std::time(0)));
     unsigned matrix_rank = A.size();
     auto Mi = new double[matrix_rank];
     for (int i = 0; i < matrix_rank; ++i) {
@@ -27,7 +30,7 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
     }
     auto x_k = new double[matrix_rank];
     for (int i = 0; i < matrix_rank; ++i) {
-        x_k[i] = 0.0;
+        x_k[i] = static_cast<double>(rand()) / RAND_MAX;
     }
     auto Ax = new double[matrix_rank];
     matrix_multiply(A, x_k, Ax);
@@ -72,6 +75,7 @@ double *ConjugateGradient::solve(std::vector<SparseRow> &A, double *b) {
         for (int i = 0; i < matrix_rank; ++i) {
             p_k[i] = p_k[i] * beta + z_k[i];
         }
+//        printf("alpha: %lf, beta: %lf, error: %lf, rz: %lf\n", alpha, beta, norm(r_k, matrix_rank), r_k2);
     }
 #ifndef NO_OUTPUT
     printf("Iter num:%d\n", iter_num);

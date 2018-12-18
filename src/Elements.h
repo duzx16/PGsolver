@@ -13,7 +13,7 @@
 #include <string>
 #include <list>
 
-class SparseRow : public std::list<std::pair<unsigned int, double>> {
+class SparseRow : public std::vector<std::pair<unsigned int, double>> {
 public:
     double &operator[](unsigned index);
 };
