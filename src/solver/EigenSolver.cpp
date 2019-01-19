@@ -30,7 +30,7 @@ double *EigenSolver::solve(std::vector<SparseRow> &A, double *b) {
         b_vec[i] = b[i];
     }
 
-    Eigen::ConjugateGradient<Eigen::SparseMatrix<double>, Eigen::Lower | Eigen::Upper> solver;
+    Eigen::SparseLU   <Eigen::SparseMatrix<double>> solver;
     solver.compute(Mat);
     if (solver.info() != Eigen::Success) {
         std::cerr << "Matrix decomposition failed !" << std::endl;

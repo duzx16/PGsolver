@@ -217,7 +217,7 @@ namespace PowerGrid {
 
                 bool is_short = false;
                 for (auto &each_neighbor_node_res : neighbor_nodes.second) {
-                    if (each_neighbor_node_res->res_value < 1e-5) {
+                    if (each_neighbor_node_res->res_value < 1e-10) {
                         root->Merge_Neighbor_NodeRes(neighbor_nodes.first, neighbor_nodes.second);
                         each_neighbor_node_res->is_merged = true;
                         Merge_Node(root, merged_node, neighbor_nodes.first);

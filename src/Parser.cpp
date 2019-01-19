@@ -151,7 +151,7 @@ namespace PowerGrid {
                     pg_solver.total_nodes[line_elements[2]]->
                             Add_Neighbor_Node(pg_solver.total_nodes[line_elements[1]], res);
 
-                    if (stod(line_elements[3]) < 1e-5) {
+                    if (stod(line_elements[3]) < 1e-10) {
 
                         res->Add_Node
                                 (pg_solver.total_nodes[line_elements[1]], pg_solver.total_nodes[line_elements[2]]);
